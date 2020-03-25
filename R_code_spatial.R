@@ -1,4 +1,4 @@
-#analisi dati spaziali
+####analisi dati spaziali 24/03/20
 
 #carico libreria e dati
 library(sp)
@@ -32,8 +32,27 @@ ggpairs(meuse[,3:6]) #in diagonale distribuzione della frequenza dei dati della 
 #spatial
 head(meuse)
 
-coordinates(meuse)=~x+y #colonne x e y sono le coordinate
+coordinates(meuse)=~x+y #colonne x e y sono da interpretare come coordinate
 plot(meuse)
 
 #creare grafico spaziale con funzione spplot
 spplot(meuse, "zinc") #crea distribuzione spaziale di variabile zinc
+
+
+###25/03/20 continua analisi spaziale
+names(meuse) #fa vedere i nomi delle colonne del dataframe
+spplot(meuse, "copper")
+
+bubble(meuse,"zinc") #dà rappresentazione spaziale analoga a quella di spplot, ma i punti, anzichè essere colorati diversamente a seconda del valore della variabile, hanno dimensione proporzionale al valore della variabile
+
+bubble(meuse,"copper",col="red")
+
+# formainiferi (Sofia), carbon capture (Marco)
+# array
+foram <- c(12,20,35,55,67,80)
+carbon <- c(5, 15, 30, 70, 85, 99)
+plot(foram,carbon,pch=19,col="green",cex=2)
+
+
+# leggere tabella
+covid<-read.table("covid_agg.csv",header=T)
