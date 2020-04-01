@@ -25,5 +25,22 @@ attach(covid)
 covids <- ppp(lon, lat, c(-180,180), c(-90,90))
 d<-density(covids)
 
-plot(d)
-points(covid)
+plot(d) #viene creato un plot di densità dei punti, non prende in considerazione il numero di casi
+points(covids) #aggiunge i punti relativi ai vari paesi
+
+# palette
+# scegliere colori da utilizzare nella mappa
+cl<- colorRampPalette(c('yellow','orange','red')) (100) #il numero tra parentesi indica il numero di gradazioni fra i vari colori, questa funzione è disponibile in alcune librerie, ad esempio spatstat
+plot(d,col=cl)
+points(covids)
+
+library(rgdal) # la libreria 'gdal' permette a qualsiasi software di leggere dati geospaziali, in R si chiama rgdal
+coastlines<-readOGR("ne_10m_coastline.shp") #funzione per leggere file di tipo geografico
+plot(coastlines,add=T) # con add=T si aggiungono le linee all'ultimo grafico creato
+
+# exercise: cambiare colori alla mappa di densità
+cl2<-colorRampPalette(c('white','blue','green','red','orange','yellow')) (150)
+plot(d,col=cl2)
+plot(coastlines,add=T,col="grey")
+
+
