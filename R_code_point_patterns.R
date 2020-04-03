@@ -1,7 +1,7 @@
 setwd("C:/lab_eco_pae")
 
 # importazione dei dati
-covid <- read.table("covid_agg.csv",header=T,sep=";")
+covid <- read.table("covid_agg.csv",header=T)
 
 head(covid)
 
