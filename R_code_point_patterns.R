@@ -6,7 +6,7 @@ covid <- read.table("covid_agg.csv",header=T,sep=";")
 head(covid)
 
 plot(covid$country,covid$cases)
-#las argomento per posizionamento delle etichette sugli assi nel grafico, las sta per "labels"
+# "las" argomento per posizionamento delle etichette sugli assi nel grafico, las sta per "labels"
 plot(covid$country,covid$cases,las=0) #las=0 etichette parallele agli assi
 plot(covid$country,covid$cases,las=1) #las=1 etichette orizzontali
 plot(covid$country,covid$cases,las=2) #las=2 perpendicolari agli assi
@@ -16,6 +16,8 @@ library(ggplot2)
 data(mpg)
 head(mpg)
 
+
+# componenti: dati, aes (sta per "estetica"), geometria
 ggplot(mpg,aes(x=displ,y=hwy))+geom_point() 
 ggplot(mpg,aes(x=displ,y=hwy))+geom_line() 
 
