@@ -24,6 +24,7 @@ ggplot(mpg,aes(x=displ,y=hwy))+geom_line()
 ggplot(covid,aes(x=lon,y=lat,size=cases)) + geom_point()
 
 attach(covid)
+# con la funzione ppp si crea il point pattern
 covids <- ppp(lon, lat, c(-180,180), c(-90,90))
 d<-density(covids)
 
@@ -46,3 +47,43 @@ plot(d,col=cl2)
 plot(coastlines,add=T,col="grey")
 
 
+
+# exercise: creare mappa di densità con dati covid
+library(spatstat)
+library(rgdal) # for the coastlines
+
+
+setwd("C:/lab")
+load("point_pattern.RData")
+ls()
+
+cl5 <- colorRampPalette(c('cyan', 'purple', 'red')) (200) 
+plot(d, col=cl5, main="density")
+points(covids)
+coastlines <- readOGR("ne_10m_coastline.shp")
+plot(coastlines, add=T)
+
+
+# interpolazione
+
+head(covid)
+marks(covids)<-covid$cases #funzione marks è in spatstat
+
+
+###### San Marino
+ # setwd("C:/lab")
+ # library(spatstat)
+ 
+ head(Tesi)
+ attach(Tesi)
+ 
+ summary(Tesi)
+ 
+ # x varia da 12.42 a 12.46
+ # y varia da 43.91 a 43.94
+ # point pattern: x,y,c(xmin,xmax),c(ymin,ymax)
+ Tesippp<-ppp(Longitude,Latitude,c(12.41,12.47),c(43.9,43.95))
+ 
+ dT<-density(Tesippp)
+ plot(dT)
+ points(Tesippp,col="green")
