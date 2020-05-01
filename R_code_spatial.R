@@ -33,20 +33,22 @@ ggpairs(meuse[, 3:6]) # in diagonale distribuzione della frequenza dei dati dell
                       # nella parte alta la correlazione fra due variabili
 
 # spatial
+library(sp)
 head(meuse)
 
 coordinates(meuse) = ~ x + y # colonne x e y sono da interpretare come coordinate
 plot(meuse)
 
 # creare grafico spaziale con funzione spplot
-spplot(meuse, "zinc") # crea distribuzione spaziale di variabile zinc, i siti sono colorati in base al valore della variabile selezionata
-
+spplot(meuse, "zinc") # crea distribuzione spaziale di variabile zinc,
+                      # i siti sono colorati in base al valore della variabile selezionata
 
 ### continuazione analisi spaziale  25/03/20
 names(meuse) # visualizzazione dei nomi delle colonne del dataframe
 spplot(meuse, "copper")
 
-bubble(meuse, "zinc") # dà rappresentazione spaziale analoga a quella di spplot, i punti hanno dimensione proporzionale al valore della variabile
+bubble(meuse, "zinc") # dà rappresentazione spaziale analoga a quella di spplot,
+                      # i punti hanno dimensione proporzionale al valore della variabile
 
 bubble(meuse, "copper", col = "red")
 
