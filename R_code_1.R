@@ -6,9 +6,9 @@ install.packages("sp")
 library(sp)
 require(sp) # altro modo per caricare pacchetto
 
-data("meuse") # richiamo del database 'meuse' inserito nella libreria 'sp'
-head(meuse)
-names(meuse) # nomi delle variabili
+data("meuse")  # richiamo del database 'meuse' inserito nella libreria 'sp'
+head(meuse)    # visualizzo le prime 6 righe del database per avere un'idea di come è costituito l'oggetto
+names(meuse)   # nomi delle variabili
 summary(meuse) # riporta le statistiche di base per le variabili di meuse
 
 pairs(meuse) # grafici a coppie fra tutte le variabili
