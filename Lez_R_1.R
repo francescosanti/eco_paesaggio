@@ -1,22 +1,23 @@
-#primo codice R
+# primo codice R
 
 install.packages("sp")
 library(sp)
-require(sp) #altro modo per caricare pacchetto
+require(sp) # altro modo per caricare pacchetto
 
 data("meuse")
 head(meuse)
-names(meuse) #nomi delle variabili
-summary(meuse)
+names(meuse) # nomi delle variabili
+summary(meuse) # riporta le statistiche di base per le variabili di meuse
 
-pairs(meuse)
-pairs(~cadmium + copper+lead,data = meuse)
+pairs(meuse) # grafici a coppie fra tutte le variabili
+pairs(~ cadmium + copper + lead, data = meuse) # grafici a coppie fra le tre variabili selezionate
 # il simbolo ~ spesso sta per "uguale" in R
 
-pairs(meuse[,3:6]) #anzichè scrivere varie colonne prendo subset del database meuse
-pairs(meuse[,3:6],
-      col="orange",pch=19, #pch sta per "point character"
-      cex=2, main="Primo pairs")          #cex sta per "character exageration"
+pairs(meuse[, 3:6]) #anzichè scrivere varie colonne prendo subset del database meuse
+pairs(meuse[, 3:6],
+      col = "orange", pch=19,   # pch sta per "point character"
+      cex = 2,                  # cex sta per "character exageration"
+      main = "Primo pairs")     # titolo del grafico
 
 
 panel.correlations <- function(x, y, digits=1, prefix="", cex.cor)
@@ -43,7 +44,7 @@ panel.smoothing <- function (x, y, col = par("col"), bg = NA, pch = par("pch"),
     lines(stats::lowess(x[ok], y[ok], f = span, iter = iter),
           col = 1, ...)
 }
-#smoothing fa una sorta di regressione fra duevariabili
+# smoothing fa una sorta di regressione fra due variabili
 
 
 
@@ -57,12 +58,12 @@ panel.histograms <- function(x, ...)
   rect(breaks[-nB], 0, breaks[-1], y, col="white", ...)
 }
 
-pairs(meuse[,3:6], lower.panel = panel.correlations, upper.panel = panel.smoothing, diag.panel = panel.histograms)
+pairs(meuse[, 3:6], lower.panel = panel.correlations, upper.panel = panel.smoothing, diag.panel = panel.histograms)
 #lower.panel è la parte sotto la diagonale
 #upper.panel è la parte sopra la diagonale
 #diag.panel è la diagonale
 
-pairs(meuse[,3:6], lower.panel = panel.smoothing, upper.panel = panel.correlations, diag.panel = panel.histograms)
+pairs(meuse[, 3:6], lower.panel = panel.smoothing, upper.panel = panel.correlations, diag.panel = panel.histograms)
 
 plot(meuse$cadmium,meuse$copper)
 attach(meuse)
