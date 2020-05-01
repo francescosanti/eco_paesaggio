@@ -51,11 +51,7 @@ bubble(meuse, "zinc") # dà rappresentazione spaziale analoga a quella di spplot
 bubble(meuse, "copper", col = "red")
 
 # formainiferi (Sofia), carbon capture (Marco)
-# array
-foram <- c(12, 20, 35, 55, 67, 80)
-carbon <- c(5, 15, 30, 70, 85, 99)
+# creazione di array
+foram <- c(12, 20, 35, 55, 67, 80) # la lettera c sta per il termine inglese 'concatenate'
+carbon <- c(5, 15, 30, 70, 85, 99) # c() si utilizza quando si deve specificare più di un oggetto
 plot(foram, carbon, pch = 19, col = "green", cex = 2)
-
-
-# leggere tabella
-covid <- read.table("covid_agg.csv", header = T)
