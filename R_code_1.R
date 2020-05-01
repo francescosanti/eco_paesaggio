@@ -1,10 +1,12 @@
+# dopo il cancelletto (#) si può scrivere quello che si vuole, non viene eseguito come comando
+
 # primo codice R
 
 install.packages("sp")
 library(sp)
 require(sp) # altro modo per caricare pacchetto
 
-data("meuse")
+data("meuse") # richiamo del database 'meuse' inserito nella libreria 'sp'
 head(meuse)
 names(meuse) # nomi delle variabili
 summary(meuse) # riporta le statistiche di base per le variabili di meuse
