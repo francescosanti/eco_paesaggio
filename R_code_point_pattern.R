@@ -1,4 +1,4 @@
-setwd("C:/lab_eco_pae")
+setwd("C:/lab")
 
 # importazione dei dati
 covid <- read.table("covid_agg.csv",header=T)
