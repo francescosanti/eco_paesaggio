@@ -106,7 +106,8 @@ plot(coastlines, add = T)
 head(covid)
 marks(covids) <- covid$cases # funzione 'marks' è in 'spatstat'
 # 'marks' associa i valori del campo scelto ai punti di un point pattern (di default il primo del campo al primo del pp, il secondo al secondo ecc)
-s <- Smooth(covids) # interpolazione spaziale del numero di casi di covid19 nei vari paesi, a partire dal dataset 'covid'
+s <- Smooth(covids) # interpolazione spaziale del numero di casi di covid19 nel mondo, a partire dal dataset 'covid'
+# 'Smooth' esegue l'interpolazione
 plot(s) # analogamente alla mappa di densità, il colore di un pixel rappresenta il valore atteso della variabile scelta
  
 plot(coastlines, add = T)
@@ -120,7 +121,7 @@ par(mfrow = c(2, 1)) # la schermata grafica viene suddivisa in due righe e una c
  
 # densità
 cl5 <- colorRampPalette(c('cyan', 'purple', 'red')) (200) 
-plot(d, col = cl5, main="density")
+plot(d, col = cl5, main= "density")
 points(covids)
 coastlines <- readOGR("ne_10m_coastline.shp")
 plot(coastlines, add = T)
@@ -132,26 +133,88 @@ points(covids)
 coastlines <- readOGR("ne_10m_coastline.shp")
 plot(coastlines, add = T)
 
+# Exercise: plot multiframe di densità e interpolazione uno acacnto all'alto
+par(mfrow = c(1, 2)) # in questo caso la schermata grafica è suddivisa in una riga e due colonne 
+
+plot(dT, main = "Density of points")
+points(Tesippp, col = "green")
+
+plot(interpol, main = "Estimate of species richness")
+points(Tesippp, col = "green")
 
 
-
-###### San Marino
-# setwd("C:/lab")
-# library(spatstat)
+###### Analisi dati di tesi svolta a San Marino
+setwd("C:/lab")
+library(spatstat)
  
 load("Tesi.RData")
 ls()
 
-head(Tesi)
+head(Tesi) # per avere un'idea di com'è fatto l'oggetto
+           # sono presenti vari campi relativi a variabili misurate nei siti di campionamento
 attach(Tesi)
  
-summary(Tesi)
- 
-# x varia da 12.42 a 12.46
-# y varia da 43.91 a 43.94
+summary(Tesi) # statistiche principali dei campi di 'Tesi'
+
+# i campi 'Longitude' e 'Latitude' indicano le coordinate dei siti di campionamento
+# longitudine varia da 12.42 a 12.46
+# latitudine varia da 43.91 a 43.94
 # point pattern: x,y,c(xmin,xmax),c(ymin,ymax)
 Tesippp <- ppp(Longitude, Latitude, c(12.41, 12.47), c(43.9, 43.95))
  
 dT <- density(Tesippp)
+plot(dT) # grafico di densità dei punti di campionamento, che risultano più concentrati nella parte centrale
+points(Tesippp, col = "green") # aggiunta dei punti relativi ai siti di campionamento
+
+colors() # elenco dei nomi di tutti i 657 colori disponbili su R
+
+
+######### 
+
+setwd("C:/lab")
+load("sanmarino.RData")
+library(spatstat)
+
+ls()
+# dT = density map, Tesi = dataset, Tesippp = point pattern
+
 plot(dT)
+points(Tesippp, col="green")
+
+head(Tesi)
+
+marks(Tesippp) <- Tesi$Species_richness # consideriamo la ricchezza specifica nei plot per effettuare l'inerpolazione
+interpol <- Smooth(Tesippp) # interpolazione dei dati di ricchezza specifica
+
+plot(interpol) # rappresentazione grafica dell'interpolazione
+               # i plot a nord sono i meno ricchi di specie, al centro-ovest e ad est le zone con ricchezza specifica maggiore
+points(Tesippp, col="green")
+
+library(rgdal)
+
+sanmarino <- readOGR("San_Marino.shp") # caricamento dello shapefile relativo al confine del territorio di San Marino
+
+plot(sanmarino, add = T) # il confine è aggiunto alla precedente mappa di interpolazione
 points(Tesippp, col = "green")
+
+
+# Exercise: plot multiframe di densità e interpolazione
+par(mfrow = c(2, 1))
+
+plot(dT, main = "Density of points")
+points(Tesippp, col = "green")
+
+plot(interpol, main = "Estimate of species richness")
+points(Tesippp, col = "green")
+
+
+
+# Exercise: plot multiframe di densità e interpolazione uno accanto all'alto
+par(mfrow = c(1, 2))
+
+plot(dT, main = "Density of points")
+points(Tesippp, col = "green")
+
+plot(interpol, main = "Estimate of species richness")
+points(Tesippp, col = "green")
+
