@@ -1,4 +1,4 @@
-### 
+### Analisi di dati spaziali
 
 setwd("C:/lab")
 
