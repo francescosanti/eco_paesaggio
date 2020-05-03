@@ -1,4 +1,4 @@
-# R code land cover
+# codice R per analisi multitemporale della land cover
 
 setwd("C:/lab")
 
