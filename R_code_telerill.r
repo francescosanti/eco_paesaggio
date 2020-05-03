@@ -112,5 +112,152 @@ plotRGB(p224r63_2011, r = 4, g = 3, b = 2, stretch = "Lin")
 plotRGB(p224r63_2011, r = 3, g = 4, b = 2, stretch = "Lin")
 # nir nella componente blu
 plotRGB(p224r63_2011, r = 3, g = 2, b = 4, stretch = "Lin")
-# a seconda della banda su cui è montata la radiazione infrarossa, alti valori di essa assumeranno
+# a seconda della banda su cui è montata la radiazione infrarossa, i pixel con alti valori di essa assumeranno
 # colorazione rispettivamente rossa, blu e verde
+
+
+library(raster)
+  setwd("C:/lab")
+  load("teleril.RData")
+  
+  p224r63_1988<-brick("p224r63_1988_masked.grd")
+  plot(p224r63_1988)
+  
+  
+  # multiframe
+  par(mfrow=c(2,2))
+  
+  # blue
+  clb <- colorRampPalette(c('dark blue','blue','light blue'))(100) # 
+  plot(p224r63_1988$B1_sre, col=clb)
+  
+  # green
+  clg <- colorRampPalette(c('dark green','green','light green'))(100) # 
+  plot(p224r63_1988$B2_sre, col=clg)
+  
+  # red
+  clr <- colorRampPalette(c('dark red','red','pink'))(100) # 
+  plot(p224r63_1988$B3_sre, col=clr)
+  
+  # nir
+  clnir <- colorRampPalette(c('red','orange','yellow'))(100) # 
+  plot(p224r63_1988$B4_sre, col=clnir)
+  
+  dev.off()
+  
+  
+  # B1: blue - 1
+  # B2: green - 2
+  # B3: red - 3
+  # B4: near infrared (nir) - 4
+  
+  
+  plotRGB(p224r63_1988, r=3, g=2, b=1, stretch="Lin")
+  
+  #Exercise: plot the image using nir on the "r" componenent in RGB space
+  plotRGB(p224r63_1988, r=3, g=2, b=1, stretch="Lin")
+  
+  # immagini 1988 e 2011
+  par(mfrow=c(2,1))
+  plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin", main="1988")
+  plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin", main="2011")
+  
+  dev.off()
+  
+  dvi1988 <- p224r63_1988$B4_sre - p224r63_1988$B3_sre
+  plot(dvi1988)
+  
+  # ex: dvi calculation for 2011
+  dvi2011 <- p224r63_2011$B4_sre - p224r63_2011$B3_sre
+  plot(dvi2011)
+  
+  cldvi <- colorRampPalette(c('light blue','light green','green'))(100) # 
+  plot(dvi2011, col=cldvi)
+  
+  # multitemporal analysis
+  difdvi <- dvi2011 - dvi1988
+  plot(difdvi)
+  
+  cldifdvi <- colorRampPalette(c('red','white','blue'))(100) # 
+  #le zone rosse mostrano un calo del valore di DVI, mentre quelle blu un suo aumento, quelle bianche sono stabili
+  plot(difdvi, col=cldifdvi)
+  
+  
+  # visualize the output
+  # multiframe 1988rgb, 2011rgb, difdiv
+  par(mfrow=c(3,1))
+  plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin")
+  plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
+  plot(difdvi, col=cldifdvi)
+  dev.off()
+  
+  
+  # variare la grana
+  p224r63_2011lr <- aggregate(p224r63_2011, fact=10)
+  
+  p224r63_2011
+  p224r63_2011lr
+  
+  par(mfrow=c(2,1))
+  plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
+  plotRGB(p224r63_2011lr, r=4, g=3, b=2, stretch="Lin")
+  
+  
+  # risluzione minore
+  p224r63_2011lr50 <- aggregate(p224r63_2011, fact=50)
+  
+  p224r63_2011lr50
+  # originale 30m -> 1500m
+  
+  par(mfrow=c(3,1))
+  plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
+  plotRGB(p224r63_2011lr, r=4, g=3, b=2, stretch="Lin")
+  plotRGB(p224r63_2011lr50, r=4, g=3, b=2, stretch="Lin")
+  dev.off()
+  
+  # dvi2011 a bassa risoluzione
+  dvi2011lr50 <- p224r63_2011lr50$B4_sre - p224r63_2011lr50$B4_sre
+  plot(dvi2011lr50)
+  
+  
+  # dvi1988 a bassa risoluzione
+  p224r63_1988lr50 <- aggregate(p224r63_1988, fact=50)
+  dvi1988lr50 <- p224r63_1988lr50$B4_sre - p224r63_1988lr50$B4_sre
+  
+  # differenza dvi a bassa risoluzione
+  difdvilr50 <- dvi2011lr50 - dvi1988lr50
+  
+  dvi2011lr50 <- p224r63_2011lr50$B4_sre - p224r63_2011lr50$B3_sre
+  
+  dvi1988lr50 <- p224r63_1988lr50$B4_sre - p224r63_1988lr50$B3_sre
+  
+  difdvilr50 <- dvi2011lr50 - dvi1988lr50
+  
+  plot(difdvilr50,col=cldifdvi)
+  
+  # multiframe
+  par(mfrow=c(2,1))
+  plot(difdvi, col=cldifdvi)
+  plot(difdvilr50, col=cldifdvi)
+
+  
+  # 21/04/20
+  
+  setwd("C:/lab")
+  library(RStoolbox)
+  
+  p224r63_2011 <- brick("p224r63_2011_masked.grd")
+  
+  plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
+  
+  p224r63_2011c <- unsuperClass(p224r63_2011, nClasses=4)
+  # unsuperclass significa che la classificazione è fatta automaticamente dal software senza il nostro intervento
+  p224r63_2011c
+  plot(p224r63_2011c$map)
+  
+  # suddivisione dei pixel in un minor numero di classi
+  p224r63_2011c <- unsuperClass(p224r63_2011, nClasses=2)
+  
+  clclass <- colorRampPalette(c('red', 'green', 'blue', 'black'))(100) 
+  plot(p224r63_2011c$map, col=clclass)
+
