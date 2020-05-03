@@ -40,6 +40,12 @@ plot(d1c$map)
 cl <- colorRampPalette(c('green','black'))(100)
 plot(d1c$map, col=cl)
 
+# esempio sul significato del $
+# mappageologica <- geomap(im_sat,nClasses=....)
+# plot(mappageologica$lito)
+# plot(mappageologica$lineaments)
+# quando un oggetto contiene degli elementi suddivisi in sottocartelle si utilizza il '$' per richiamarli
+
 
 d2c <- unsuperClass(defor2, nClasses = 2) # classificazione dei pixel in due gruppi in modo analogo al precedente
 plot(d2c$map)
@@ -49,67 +55,44 @@ par(mfrow = c(2,1))
 plot(d1c$map, col=cl)
 plot(d2c$map, col=cl)
 
-############
+
+# calcolo della frequenza delle due classi di pixel nella prima immagine
 freq(d1c$map)
 
 # aree aperte = 37039
-
 # foresta = 304253
 
-
-
+# numero di pixel totali nella prima immagine
 totd1 <- 37039 + 304253
 
 totd1
-
 # 341292
 
-
-
+# calcolo delle frequenze percentuali
 percent1 <- freq(d1c$map) * 100 / totd1
 
-
-
-# percentuali
-
-# foreste: 89.1
-
-# aree aperte: 10.9
+# foreste: 89.1 %
+# aree aperte: 10.9 %
 
 
 
-#---- 
-
-
-
+# calcolo analogo al precendente per le due classi della seconda immagine
 freq(d2c$map)
 
 # aree aperte: 165055
-
 # foreste: 177671
 
-
-
 totd2 <- 165055 + 177671
-
 totd2
-
 # 342726
-
-
 
 percent2 <- freq(d2c$map) * 100 / totd2
 
+# aree aperte: 48.2 %
+# foreste: 51.8 %
 
 
-# percent
-
-# aree aperte: 48.2
-
-# foreste: 51.8
-
-
-
+#################################################
 #-----
 
 
