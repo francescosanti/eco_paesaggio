@@ -1,3 +1,5 @@
+# R code land cover
+
 setwd("C:/lab")
 
 install.packages("Rstoolbox") # libreria per analisi immagini da telerilevamento
@@ -25,4 +27,8 @@ p224r63_2011c <- unsuperClass(p224r63_2011, nClasses = 2)
 plot(p224r63_2011c$map)
 
 # se il numero di classi è alto, la classe di appartenenza dei singoli pixel non è stabile
-# con un numero di classi più basso, esse sono distinte più nettamente
+# con un numero di classi più basso, esse hanno una distinzione più netta
+
+
+# in funzione del numero di classi aumenta l'incertezza dell'algoritmo automatico di classificazione
+# riportando potenzialmente classi leggermente differenti
