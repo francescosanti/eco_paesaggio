@@ -165,22 +165,25 @@ plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin", main="2011")
 dev.off()
 
 #######################################################################
-# calcolo dell'indice dvi per il 1988
+# calcolo dell'indice spettrale dvi per il 1988
+# dvi = nir - red
 dvi1988 <- p224r63_1988$B4_sre - p224r63_1988$B3_sre
 plot(dvi1988)
   
-# ex: dvi calculation for 2011
+# ex: calcolo dvi per il 2011
 dvi2011 <- p224r63_2011$B4_sre - p224r63_2011$B3_sre
 plot(dvi2011)
   
-cldvi <- colorRampPalette(c('light blue','light green','green'))(100) # 
+cldvi <- colorRampPalette(c('light blue','light green','green'))(100)
 plot(dvi2011, col=cldvi)
 
 # multitemporal analysis
+# cambiamento di dvi nel tempo
 difdvi <- dvi2011 - dvi1988
 plot(difdvi)
-  
-cldifdvi <- colorRampPalette(c('red','white','blue'))(100) # 
+
+# cambiamento della palette per rendere più evidenti le variazioni
+cldifdvi <- colorRampPalette(c('red','white','blue'))(100)
 # le zone rosse mostrano un calo del valore di DVI, mentre quelle blu un suo aumento, quelle bianche sono stabili
 plot(difdvi, col=cldifdvi)
   
@@ -194,22 +197,23 @@ plot(difdvi, col=cldifdvi)
 dev.off()
   
   
-# variare la grana
-p224r63_2011lr <- aggregate(p224r63_2011, fact=10)
+# variare la grana dell'immagine
+p224r63_2011lr <- aggregate(p224r63_2011, fact=10) # i pixel assumono una dimensione 10 volte maggiore (di lato)
   
 p224r63_2011
 p224r63_2011lr
-  
+
+# multiframe con immagine di partenza e a risoluzione più bassa
 par(mfrow=c(2,1))
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
 plotRGB(p224r63_2011lr, r=4, g=3, b=2, stretch="Lin")
-  
-  
-# risluzione minore
+
+
+# risluzione ancora più bassa
 p224r63_2011lr50 <- aggregate(p224r63_2011, fact=50)
   
 p224r63_2011lr50
-# originale 30m -> 1500m
+# originale ogni pixel ha lato di 30m -> si passa a lato di 1500m
   
 par(mfrow=c(3,1))
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
@@ -227,39 +231,16 @@ p224r63_1988lr50 <- aggregate(p224r63_1988, fact=50)
 dvi1988lr50 <- p224r63_1988lr50$B4_sre - p224r63_1988lr50$B4_sre
   
 # differenza dvi a bassa risoluzione
-difdvilr50 <- dvi2011lr50 - dvi1988lr50
-  
 dvi2011lr50 <- p224r63_2011lr50$B4_sre - p224r63_2011lr50$B3_sre
   
 dvi1988lr50 <- p224r63_1988lr50$B4_sre - p224r63_1988lr50$B3_sre
 
 difdvilr50 <- dvi2011lr50 - dvi1988lr50
-
 plot(difdvilr50,col=cldifdvi)
   
-# multiframe
+# multiframe con dvi base e a bassa risoluzione
 par(mfrow=c(2,1))
 plot(difdvi, col=cldifdvi)
 plot(difdvilr50, col=cldifdvi)
-
-  
-# 21/04/20
-  
-setwd("C:/lab")
-library(RStoolbox)
-
-p224r63_2011 <- brick("p224r63_2011_masked.grd")
-
-plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
-  
-p224r63_2011c <- unsuperClass(p224r63_2011, nClasses=4)
-# unsuperclass significa che la classificazione è fatta automaticamente dal software senza il nostro intervento
-p224r63_2011c
-plot(p224r63_2011c$map)
-  
-# suddivisione dei pixel in un minor numero di classi
-p224r63_2011c <- unsuperClass(p224r63_2011, nClasses=2)
-  
-clclass <- colorRampPalette(c('red', 'green', 'blue', 'black'))(100) 
-plot(p224r63_2011c$map, col=clclass)
+# non è più possibile ottenere il livello di dettaglio precedente, l'analisi risulta perciò più grossolana
 
