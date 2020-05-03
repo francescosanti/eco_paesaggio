@@ -63,7 +63,7 @@ freq(d1c$map)
 # foresta = 304253
 
 # numero di pixel totali nella prima immagine
-totd1 <- 37039 + 304253
+totd1 <- 37039 + 304253 # questo calcolo poteva anche essere fatto fare automaticamente al software
 
 totd1
 # 341292
@@ -73,7 +73,6 @@ percent1 <- freq(d1c$map) * 100 / totd1
 
 # foreste: 89.1 %
 # aree aperte: 10.9 %
-
 
 
 # calcolo analogo al precendente per le due classi della seconda immagine
@@ -92,44 +91,25 @@ percent2 <- freq(d2c$map) * 100 / totd2
 # foreste: 51.8 %
 
 
-#################################################
-#-----
-
-
-
+# creazione di vettori per analisi grafica
 cover <- c("Agriculture","Forest")
-
 before <- c(10.9,89.1)
-
 after <- c(48.2,51.8)
 
-
-
+# creazione di un dataframe con i vettori precedentemente creati
 output <- data.frame(cover,before,after)
-
 output
 
-
-
-
-
+################
 library(ggplot2)
 
 p1<-ggplot(output, aes(x=cover, y=before, color=cover)) + geom_bar(stat="identity", fill="white")
-
 # 
-
 p2<-ggplot(output, aes(x=cover, y=after, color=cover)) + geom_bar(stat="identity", fill="white")
 
-
-
 # https://cran.r-project.org/web/packages/egg/vignettes/Ecosystem.html
-
 install.packages("gridExtra")
-
 library(gridExtra)
-
-
 
 grid.arrange(p1, p2, nrow = 1) # this needs griExtra
 
