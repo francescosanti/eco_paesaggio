@@ -24,7 +24,8 @@ plot(p224r63_2011c$map, col = clclass)
 
 # suddivisione dei pixel in un minor numero di classi
 p224r63_2011c <- unsuperClass(p224r63_2011, nClasses = 2)
-plot(p224r63_2011c$map)
+clclass <- colorRampPalette(c('red', 'green', 'blue', 'black'))(100) 
+plot(p224r63_2011c$map, col = clclass)
 
 # se il numero di classi è alto, la classe di appartenenza dei singoli pixel non è stabile
 # con un numero di classi più basso, esse hanno una distinzione più netta
