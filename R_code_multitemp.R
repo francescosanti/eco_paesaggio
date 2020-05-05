@@ -155,3 +155,47 @@ grafico2 <- ggplot(output, aes(x=cover, y=after, color=cover)) +
 # ex: utilizzare grid.arrange() per plottare i due grafici
 grid.arrange(grafico1,grafico2,nrow=1)
 
+
+# day 2
+
+setwd("C:/lab")
+load("defor.RData")
+
+ls()
+
+library(raster)
+
+par(mfrow=c(1,2))
+cl <- colorRampPalette(c('black','green'))(100) # 
+plot(d1c$map, col=cl)
+plot(d2c$map, col=cl)
+
+
+output
+
+library(ggplot2)
+
+ggplot(output, aes(x=cover, y=before, color=cover)) + 
+  geom_bar(stat="identity", fill="white")
+
+# Exercise: plottare istogrammi di land cover dopo la deforestazione
+ggplot(output, aes(x=cover, y=after, color=cover)) + 
+  geom_bar(stat="identity", fill="white")
+
+# la funzione "par" per più grafici in stessa schermata non funziona in ggplot2
+# è necessario installare il pacchetto "gridExtra"
+
+install.packages("gridExtra")
+library(gridExtra)
+
+# grid.arrange(plot1,plot2,nrow=1)
+
+grafico1 <- ggplot(output, aes(x=cover, y=before, color=cover)) + 
+  geom_bar(stat="identity", fill="white")
+
+
+grafico2 <- ggplot(output, aes(x=cover, y=after, color=cover)) + 
+  geom_bar(stat="identity", fill="white")
+
+# ex: utilizzare grid.arrange() per plottare i due grafici
+grid.arrange(grafico1,grafico2,nrow=1)
