@@ -87,7 +87,23 @@ plot(EN12, col=cl)
 plot(EN13, col=cl)
 
 
-#for(a in 1:13){
-#  plot(paste("EN",rep("0",1-as.integer(log10(a))),a,sep=""),
-#         raster(paste("EN_00",rep("0",1-as.integer(log10(a))),a,".png",sep="")))
-#}
+### day 2
+setwd("C:/lab")
+
+load("no2.RData")
+ls()
+
+
+setwd("C:/lab/esa_no2")
+rlist <- list.files(pattern=".png")
+rlist
+
+listafinale <- lapply(rlist, raster)
+# lapply si può usare per vettori o liste
+listafinale
+
+EN <- stack(listafinale) # crea un oggetto compatto con tutte le immagini, in questo modo si possono plottare tutte con un solo comando
+cl <- colorRampPalette(c('red','orange','yellow'))(100) #
+plot(EN, col=cl)
+
+
