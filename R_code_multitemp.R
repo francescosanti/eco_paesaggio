@@ -199,3 +199,18 @@ grafico2 <- ggplot(output, aes(x=cover, y=after, color=cover)) +
 
 # ex: utilizzare grid.arrange() per plottare i due grafici
 grid.arrange(grafico1,grafico2,nrow=1)
+
+
+grafico1 <- ggplot(output, aes(x=cover, y=before, color=cover)) + 
+  geom_bar(stat="identity", fill="white") +
+  ylim(0, 100)
+
+grafico2 <- ggplot(output, aes(x=cover, y=after, color=cover)) + 
+  geom_bar(stat="identity", fill="white") +
+  ylim(0, 100)
+
+
+grid.arrange(grafico1, grafico2, nrow = 1)
+# i grafici finali risultano più leggibili e confrontabili perchè hanno stesso intervallo per l'ordinata
+
+
