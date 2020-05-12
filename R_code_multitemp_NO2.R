@@ -98,12 +98,25 @@ setwd("C:/lab/esa_no2")
 rlist <- list.files(pattern=".png")
 rlist
 
-listafinale <- lapply(rlist, raster)
+listafinale <- lapply(rlist, raster) # lapply sta per "list apply"
 # lapply si può usare per vettori o liste
 listafinale
 
 EN <- stack(listafinale) # crea un oggetto compatto con tutte le immagini, in questo modo si possono plottare tutte con un solo comando
+
+difEN <- EN$EN_0013 - EN$EN_0001
+cld <- colorRampPalette(c('blue','white','red'))(100) # 
+plot(difEN, col=cld)
+
 cl <- colorRampPalette(c('red','orange','yellow'))(100) #
 plot(EN, col=cl)
 
 
+boxplot(EN, horizontal=T,  # le barre dei boxplot vengono poste orizzontalmente
+        outline=F,         # vengono eliminati gli outliners, i punti che stanno all'esterno dell'intervallo primo-terzo quartile
+        axes=T)            # axes=T è di default, con axes=F non vengono rappresentati gli assi nel plot
+  
+  # a livello continentale, non cambiano molto i valori medi di NO2, ciò che cambia sono i valori max, che calano dai primi frame agli ultimi
+  
+  
+  
