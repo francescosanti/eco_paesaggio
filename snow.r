@@ -62,7 +62,7 @@ predicted.snow.2025.norm <- predicted.snow.2025*255/53.90828
 
 
 
-predicted.snow.2025.norm <- raster("predicted.snow.2025.norm.tif") # risultato 
+predicted.snow.2025.norm <- raster("predicted.snow.2025.norm.tif") # copertura di neve nel 2025, stimata dal modello precedente
 
 plot(predicted.snow.2025.norm, col=cl)
 
