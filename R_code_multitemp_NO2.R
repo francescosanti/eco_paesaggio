@@ -30,25 +30,25 @@ for(a in 1:13){
   assign(paste("EN",rep("0",1-as.integer(log10(a))),a,sep=""),
          raster(paste("EN_00",rep("0",1-as.integer(log10(a))),a,".png",sep="")))
 }
+# comando specifico per questo esercizio, non direttamente generalizzabile => un po' limitato
 
 # altra possibilità di ciclo
 library(raster)
 
+# file da importare inseriti in un'unica cartella
 setwd("~/lab/esa_no2")
-# put all files into the folder
 
-rlist=list.files(pattern=".png", full.names=T)
+# file con estensione .png inseriti in un oggetto
+rlist <- list.files(pattern = ".png", full.names = T)
 
-#save raster into list
-#con lappy
+# importazione vera e propria dei raster
+list_rast <- lapply(rlist, raster) # con lapply si applica un comando a tutti gli oggetti di una lista
 
-list_rast=lapply(rlist, raster)
-
-#con ciclo for
-list_rast=list()
+# importazione può essere effettuata anche con ciclo for
+list_rast = list()
 for(i in 1:length(rlist)){
-  r=raster(rlist[[i]])
-  list_rast[[i]]=r
+  r <- raster(rlist[[i]])
+  list_rast[[i]] <- r
 }
 
 
