@@ -1,6 +1,21 @@
 # R_code_exam.r
 
+# Copernicus data: https://land.copernicus.vgt.vito.be/PDF/portal/Application.html
 
+
+# 1. R_code_first.r	
+# 2. R_code_spatial.r	
+# 3. R_code_spatial2.r
+# 4. R_code_point_pattern	
+# 5. R_code_teleril.r	
+# 6. R_code_landcover.r	
+# 7. R_code_multitemp.r	
+# 8. R_code_multitemp_NO2.r	
+# 9. R_code_snow.r	
+# 10. R_code_patches.r
+
+#############################################################################
+#############################################################################
 
 # primo codice R
 # dopo il cancelletto (#) si può scrivere quello che si vuole, non viene eseguito come comando
