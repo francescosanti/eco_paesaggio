@@ -304,14 +304,6 @@ points(covids)
 coastlines <- readOGR("ne_10m_coastline.shp")
 plot(coastlines, add = T)
 
-# Exercise: plot multiframe di densità e interpolazione uno acacnto all'alto
-par(mfrow = c(1, 2)) # in questo caso la schermata grafica è suddivisa in una riga e due colonne 
-
-plot(dT, main = "Density of points")
-points(Tesippp, col = "green")
-
-plot(interpol, main = "Estimate of species richness")
-points(Tesippp, col = "green")
 
 
 ###### Analisi dati di tesi svolta a San Marino
@@ -380,14 +372,15 @@ points(Tesippp, col = "green")
 
 
 
-# Exercise: plot multiframe di densità e interpolazione uno accanto all'alto
-par(mfrow = c(1, 2))
+# Exercise: plot multiframe di densità e interpolazione uno accanto all'altro
+par(mfrow = c(1, 2)) # in questo caso la schermata grafica è suddivisa in una riga e due colonne 
 
 plot(dT, main = "Density of points")
 points(Tesippp, col = "green")
 
 plot(interpol, main = "Estimate of species richness")
 points(Tesippp, col = "green")
+
 
 
 ###############################################################
