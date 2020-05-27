@@ -18,27 +18,27 @@
 #############################################################################
 
 # primo codice R
-# dopo il cancelletto (#) si può scrivere quello che si vuole, non viene eseguito come comando
+# FS  dopo il cancelletto (#) si può scrivere quello che si vuole, non viene eseguito come comando
 
-install.packages("sp")
-library(sp)
-require(sp) # altro modo per caricare pacchetto
+install.packages("sp") # FS  comando per scaricare pacchetti -> contengono funzioni specifiche per ambiti
+library(sp) # FS  caricare un pacchetto precedentemente installato
+require(sp) # FS  altro modo per caricare pacchetto
 
-data("meuse")  # richiamo del database 'meuse' inserito nella libreria 'sp'
-head(meuse)    # visualizzo le prime 6 righe del database per avere un'idea di come è costituito l'oggetto
-names(meuse)   # nomi delle variabili
-summary(meuse) # riporta le statistiche di base per le variabili di meuse
+data("meuse")  # FS  richiamo del database 'meuse' inserito nella libreria 'sp'
+head(meuse)    # FS  visualizzo le prime 6 righe del database per avere un'idea di come è costituito l'oggetto
+names(meuse)   # FS  nomi delle variabili
+summary(meuse) # FS  riporta le statistiche di base per le variabili di meuse
 
-pairs(meuse) # grafici a coppie fra tutte le variabili
-pairs(~ cadmium + copper + lead, data = meuse) # grafici a coppie fra le tre variabili selezionate
-# il simbolo ~ spesso sta per "uguale" in R
+pairs(meuse) # FS  grafici a coppie fra tutte le variabili
+pairs(~ cadmium + copper + lead, data = meuse) # FS  grafici a coppie fra le tre variabili selezionate
+# FS  il simbolo ~ spesso sta per "uguale" in R
 
-pairs(meuse[, 3:6]) #anzichè scrivere varie colonne prendo subset del database meuse
+pairs(meuse[, 3:6]) # FS  anzichè scrivere varie colonne prendo subset del database meuse
 pairs(meuse[, 3:6],
-      col = "orange",        # scelgo il colore dei simboli
-      pch=19,                # pch sta per "point character", scelgo tipo di simbolo
-      cex = 2,               # cex sta per "character exageration", scelgo la grandezza del simbolo (di base cex=1)
-      main = "Primo pairs")  # titolo del grafico
+      col = "orange",        # FS  scelgo il colore dei simboli
+      pch=19,                # FS  pch sta per "point character", scelgo tipo di simbolo
+      cex = 2,               # FS  cex sta per "character exageration", scelgo la grandezza del simbolo (di base cex=1)
+      main = "Primo pairs")  # FS  titolo del grafico
 
 
 panel.correlations <- function(x, y, digits=1, prefix="", cex.cor)
@@ -52,7 +52,7 @@ panel.correlations <- function(x, y, digits=1, prefix="", cex.cor)
   if(missing(cex.cor)) cex <- 0.9/strwidth(txt)
   text(0.5, 0.5, txt, cex = cex * r)
 }
-# funzione per calcolare la correlazione fra due variabili
+# FS  funzione per calcolare la correlazione fra due variabili
 
 
 panel.smoothing <- function (x, y, col = par("col"), bg = NA, pch = par("pch"),
@@ -64,7 +64,7 @@ panel.smoothing <- function (x, y, col = par("col"), bg = NA, pch = par("pch"),
     lines(stats::lowess(x[ok], y[ok], f = span, iter = iter),
           col = 1, ...)
 }
-# smoothing fa una sorta di regressione fra due variabili
+# FS  smoothing fa una sorta di regressione fra due variabili
 
 
 
@@ -77,22 +77,22 @@ panel.histograms <- function(x, ...)
   y <- h$counts; y <- y/max(y)
   rect(breaks[-nB], 0, breaks[-1], y, col="white", ...)
 }
-# funzione per creare istogramma di una variabile
+# FS  funzione per creare istogramma di una variabile
 
 
-# grafici a coppie fra le quattro variabili selezionate, in cui vengono mostrati anche coefficiente di correlazione
-# fra le variabili e istogramma delle singole variabili, utilizzando le funzioni precedentemente create
+# FS  grafici a coppie fra le quattro variabili selezionate, in cui vengono mostrati anche coefficiente di correlazione
+# FS  fra le variabili e istogramma delle singole variabili, utilizzando le funzioni precedentemente create
 pairs(meuse[, 3:6], lower.panel = panel.correlations, upper.panel = panel.smoothing, diag.panel = panel.histograms)
-# lower.panel è la parte sotto la diagonale
-# upper.panel è la parte sopra la diagonale
-# diag.panel è la diagonale
+# FS  lower.panel è la parte sotto la diagonale
+# FS  upper.panel è la parte sopra la diagonale
+# FS  diag.panel è la diagonale
 
 pairs(meuse[, 3:6], lower.panel = panel.smoothing, upper.panel = panel.correlations, diag.panel = panel.histograms)
-# correlazione e interpolazione invertite di posto rispetto alla diagonale
+# FS  correlazione e interpolazione invertite di posto rispetto alla diagonale
 
-# plot fra due variabili
+# FS  plot fra due variabili
 plot(meuse$cadmium, meuse$copper)
-attach(meuse) # permette di richimare i campi dell'oggetto 'meuse' senza dover richiamare l'oggetto stesso (non serve più 'meuse$')
+attach(meuse) # FS  permette di richimare i campi dell'oggetto 'meuse' senza dover richiamare l'oggetto stesso (non serve più 'meuse$')
 plot(cadmium, copper)
 plot(cadmium, copper, pch=17, col = "green", main = "Primo plot", xlab = "Cadmio", ylab = "Rame")
 
@@ -103,14 +103,14 @@ plot(cadmium, copper, pch=17, col = "green", main = "Primo plot", xlab = "Cadmio
 # 2 r code spatial
 #### analisi dati spaziali 24/03/20
 
-# carico libreria e dati
+# FS  carico libreria e dati
 library(sp)
 data(meuse)
 
 head(meuse)
 
-# plot di cadmio e piombo
-# allegare dataframe
+# FS  plot di cadmio e piombo
+# FS  allegare dataframe
 attach(meuse)
 
 plot(cadmium, lead, col = "red", pch = 19, cex = 2)
@@ -119,7 +119,7 @@ plot(cadmium, lead, col = "red", pch = 19, cex = 2)
 plot(copper, zinc, col = "green", pch = 17, cex = 2, xlab = "rame", ylab = "zinco")
 
 # multiframe o multipanel (inserire più grafici in una finestra)
-par(mfrow = c(1, 2)) #divide lo schermo in due colonne e una riga
+par(mfrow = c(1, 2)) # FS  divide lo schermo in due colonne e una riga
 plot(cadmium, lead, col = "red", pch = 19, cex = 2)
 plot(copper, zinc, col = "green", pch = 17, cex = 2, xlab = "rame", ylab = "zinco")
 
