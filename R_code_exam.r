@@ -327,10 +327,10 @@ summary(Tesi) # FS  statistiche principali dei campi di 'Tesi'
 Tesippp <- ppp(Longitude, Latitude, c(12.41, 12.47), c(43.9, 43.95))
  
 dT <- density(Tesippp)
-plot(dT) # grafico di densità dei punti di campionamento, che risultano più concentrati nella parte centrale
-points(Tesippp, col = "green") # aggiunta dei punti relativi ai siti di campionamento
+plot(dT) # FS  grafico di densità dei punti di campionamento, che risultano più concentrati nella parte centrale
+points(Tesippp, col = "green") # FS  aggiunta dei punti relativi ai siti di campionamento
 
-colors() # elenco dei nomi di tutti i 657 colori disponbili su R
+colors() # FS  elenco dei nomi di tutti i 657 colori disponbili su R
 
 
 ######### 
@@ -347,18 +347,18 @@ points(Tesippp, col="green")
 
 head(Tesi)
 
-marks(Tesippp) <- Tesi$Species_richness # consideriamo la ricchezza specifica nei plot per effettuare l'inerpolazione
-interpol <- Smooth(Tesippp) # interpolazione dei dati di ricchezza specifica
+marks(Tesippp) <- Tesi$Species_richness # FS  consideriamo la ricchezza specifica nei plot per effettuare l'inerpolazione
+interpol <- Smooth(Tesippp) # FS  interpolazione dei dati di ricchezza specifica
 
-plot(interpol) # rappresentazione grafica dell'interpolazione
-               # i plot a nord sono i meno ricchi di specie, al centro-ovest e ad est le zone con ricchezza specifica maggiore
+plot(interpol) # FS  rappresentazione grafica dell'interpolazione
+               # FS  i plot a nord sono i meno ricchi di specie, al centro-ovest e ad est le zone con ricchezza specifica maggiore
 points(Tesippp, col="green")
 
 library(rgdal)
 
-sanmarino <- readOGR("San_Marino.shp") # caricamento dello shapefile relativo al confine del territorio di San Marino
+sanmarino <- readOGR("San_Marino.shp") # FS  caricamento dello shapefile relativo al confine del territorio di San Marino
 
-plot(sanmarino, add = T) # il confine è aggiunto alla precedente mappa di interpolazione
+plot(sanmarino, add = T) # FS  il confine è aggiunto alla precedente mappa di interpolazione
 points(Tesippp, col = "green")
 
 
@@ -374,7 +374,7 @@ points(Tesippp, col = "green")
 
 
 # Exercise: plot multiframe di densità e interpolazione uno accanto all'altro
-par(mfrow = c(1, 2)) # in questo caso la schermata grafica è suddivisa in una riga e due colonne 
+par(mfrow = c(1, 2)) # FS  in questo caso la schermata grafica è suddivisa in una riga e due colonne 
 
 plot(dT, main = "Density of points")
 points(Tesippp, col = "green")
@@ -396,10 +396,10 @@ library(raster)
 setwd("C:/lab_eco_pae")
  
 p224r63_2011 <- brick("p224r63_2011_masked.grd")
-# il comando brick permette di importare file raster
-# immagine acquisita dal satellite Landsat nel 2011, relativa all'incrocio fra path 224 e row 63
+# FS  il comando brick permette di importare file raster, si usa quando ci sono più bande da importare
+# FS  immagine acquisita dal satellite Landsat nel 2011, relativa all'incrocio fra path 224 e row 63
 
-plot(p224r63_2011) # vengono mostrate tutte le bande relative alla riflettanza nelle diverse lunghezze d'onda
+plot(p224r63_2011) # FS  vengono mostrate tutte le bande relative alla riflettanza nelle diverse lunghezze d'onda
 # B1: blue
 # B2: green
 # B3: red
@@ -409,7 +409,7 @@ plot(p224r63_2011) # vengono mostrate tutte le bande relative alla riflettanza n
 # B7: medium infrared
 
 
-# salvo il workspace
+# FS  salvo il workspace
 save.image("C:/lab/teleril.RData")
 
 
@@ -426,10 +426,10 @@ plot(p224r63_2011)
 
 # cambio dei colori
 cl <- colorRampPalette(c('black', 'grey', 'light grey'))(100)
-plot(p224r63_2011, col = cl) # con col=cl i colori dei grafici saranno quelli della palette creata
+plot(p224r63_2011, col = cl) # FS  con col=cl i colori dei grafici saranno quelli della palette creata
 
-cllow <- colorRampPalette(c('black', 'grey', 'light grey'))(5) # palette con meno gradazioni di colori
-plot(p224r63_2011, col = cllow) # il dettaglio dell'immagine è molto minore rispetto a prima
+cllow <- colorRampPalette(c('black', 'grey', 'light grey'))(5) # FS  palette con meno gradazioni di colori
+plot(p224r63_2011, col = cllow) # FS  il dettaglio dell'immagine è molto minore rispetto a prima
 
 names(p224r63_2011)
 # "B1_sre" "B2_sre" "B3_sre" "B4_sre" "B5_sre" "B6_bt" "B7_sre"
@@ -437,7 +437,7 @@ names(p224r63_2011)
 # riflettanza nel blu
 clb <- colorRampPalette(c('dark blue', 'blue', 'light blue'))(100)
 plot(p224r63_2011$B1_sre, col = clb)
-# la funzione attach(dataframe) non vale con il pacchetto 'raster', quindi si utilizza il simbolo '$' per richiamare i campi dell'oggetto
+# FS  la funzione attach(dataframe) non vale con il pacchetto 'raster', quindi si utilizza il simbolo '$' per richiamare i campi dell'oggetto
 
 # Exercise: plottare la banda del vicino infrarosso vicino con 
 # colorRampPalette che varia dal rosso, all'arancione, al giallo
@@ -446,55 +446,56 @@ plot(p224r63_2011$B4_sre, col = clnir)
 
 
 # multiframe
-par(mfrow = c(2, 2)) # due righe e due colonne
+par(mfrow = c(2, 2)) # FS  due righe e due colonne
 
 # blue
 clb <- colorRampPalette(c('dark blue', 'blue', 'light blue'))(100)
 plot(p224r63_2011$B1_sre, col = clb)
 
 # green
-clg <- colorRampPalette(c('dark green', 'green', 'light green'))(100) #
+clg <- colorRampPalette(c('dark green', 'green', 'light green'))(100)
 plot(p224r63_2011$B2_sre, col = clg)
 
 # red
-clr <- colorRampPalette(c('dark red', 'red', 'pink'))(100) #
+clr <- colorRampPalette(c('dark red', 'red', 'pink'))(100)
 plot(p224r63_2011$B3_sre, col = clr)
 
 # nir
-clnir <- colorRampPalette(c('red', 'orange', 'yellow'))(100) #
+clnir <- colorRampPalette(c('red', 'orange', 'yellow'))(100)
 plot(p224r63_2011$B4_sre, col = clnir)
-# valori alti di infrarosso sono molto presenti e si trovano in corrispondenza di bassi valori di radiazione rossa e blu,
-# quindi l'immagine è relativa ad una zona vegetata
+# FS  valori alti di infrarosso sono molto presenti e si trovano in corrispondenza di bassi valori di radiazione rossa e blu,
+# FS  quindi l'immagine è relativa ad una zona vegetata
 
 dev.off() # chiude la finestra grafica, ripristinando le impostazioni grafiche di base (schermata unica)
 
 
 # natural colours
-# il computer visualizza colori come sovrapposizione di gradazioni di rosso, verde e blue
-# per visualizzazre l'immagine come la vedono i nostri occhi bisogna sovrapporre le bande del rosso, del verde e del blu
-
-plotRGB(p224r63_2011, r = 3, g = 2, b = 1)
+# FS  il computer visualizza colori come sovrapposizione di gradazioni di rosso, verde e blue
+# FS  per visualizzazre l'immagine come la vedono i nostri occhi bisogna sovrapporre le bande del rosso, del verde e del blu
+# FS si utilizza la funzione plotRGB
+plotRGB(p224r63_2011, r = 3, g = 2, b = 1) # FS al rosso (r) è associata la banda rossa (3), al verde (g) quella verde(2) e al blu (b) quella blu (1)
  
-plotRGB(p224r63_2011, r = 3, g = 2, b = 1, stretch = "Lin") # stretch="Lin" permette di ampliare la gamma di colori
-                                                            # e rendere l'immagine visibile
+plotRGB(p224r63_2011, r = 3, g = 2, b = 1, stretch = "Lin") # FS  stretch="Lin" permette di ampliare la gamma di colori
+                                                            # FS  e rendere l'immagine visibile
   
-# aggiunta della banda infrarossa, che permette di rendere l'immagine più leggibile (fa capire dov'è la vegetazione)
-# bisogna eliminare una delle tre di prima, per esempio la blu e far scalare i valori delle altre
+# FS  aggiunta della banda infrarossa, che permette di rendere l'immagine più leggibile (fa capire dov'è la vegetazione)
+# FS  bisogna eliminare una delle tre di prima, per esempio la blu e far scalare i valori delle altre
 plotRGB(p224r63_2011, r = 4, g = 3, b = 2, stretch = "Lin")
-# il colore rosso corrisponde ad un'alta riflettanza della componente infrarossa
+# FS  il colore rosso corrisponde ad un'alta riflettanza della componente infrarossa
 
 # creare un pdf
 pdf("primografico.pdf")
-# le immagini eseguite successivamente vengono inserite nel pdf
+# FS  le immagini eseguite successivamente all'apertura del pdf vengono inserite qui
 plotRGB(p224r63_2011, r = 4, g = 3, b = 2, stretch = "Lin")
-dev.off() # il pdf è creato, è stato salvato nell cartella su cui è impostata la working directory
+dev.off() # FS  il pdf è creato, è stato salvato nell cartella su cui è impostata la working directory
+          # FS  dev.off() si può usare in generale per chiudere la schermata grafica e ripristinare le impostazioni grafiche iniziali
 
 # multiframe
 par(mfrow = c(2, 1))
 plotRGB(p224r63_2011, r = 3, g = 2, b = 1, stretch = "Lin")
 plotRGB(p224r63_2011, r = 4, g = 3, b = 2, stretch = "Lin")
-# affiancando le immagini con colori naturali e banda infrarossa, queste possono essere facilmente confontate
-# si può perciò capire meglio dov'è la vegetazione (per esempio)
+# FS  affiancando le immagini con colori naturali e banda infrarossa, queste possono essere facilmente confontate
+# FS  si può perciò capire meglio dov'è la vegetazione (per esempio)
 dev.off()
   
 # nir nella componente red
@@ -503,18 +504,19 @@ plotRGB(p224r63_2011, r = 4, g = 3, b = 2, stretch = "Lin")
 plotRGB(p224r63_2011, r = 3, g = 4, b = 2, stretch = "Lin")
 # nir nella componente blu
 plotRGB(p224r63_2011, r = 3, g = 2, b = 4, stretch = "Lin")
-# a seconda della banda su cui è montata la radiazione infrarossa, i pixel con alti valori di essa assumeranno
-# colorazione rispettivamente rossa, blu e verde
+# FS  a seconda della banda su cui è montata la radiazione infrarossa, i pixel con alti valori di essa assumeranno
+# FS  colorazione rispettivamente rossa, blu e verde
 
 
 library(raster)
 setwd("C:/lab")
 load("teleril.RData")
   
-p224r63_1988 <- brick("p224r63_1988_masked.grd") # importazione dell'immagine del 1988 della stessa area già analizzata per il 2011
+p224r63_1988 <- brick("p224r63_1988_masked.grd") # FS  importazione dell'immagine del 1988 della stessa area già analizzata per il 2011
 plot(p224r63_1988)
 
-# multiframe # rappresentazione compatta delle 4 bande di interesse
+# multiframe
+# FS  rappresentazione compatta in un'unica schermata delle 4 bande di interesse
 par(mfrow=c(2,2))
   
 # blue
@@ -540,7 +542,7 @@ dev.off()
 # B3: red - 3
 # B4: near infrared (nir) - 4
   
-# immagine con colori a noi visibili
+# FS  immagine con colori a noi visibili
 plotRGB(p224r63_1988, r=3, g=2, b=1, stretch="Lin")
   
 # Exercise: plot the image using nir on the "r" componenent in RGB space
@@ -550,7 +552,7 @@ plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin")
 par(mfrow = c(2,1))
 plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin", main="1988")
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin", main="2011")
-# si nota una marcata diminuzione dei pixel rossi, corrispondenti ai punti con alta riflettanza nel vicino infrarosso => deforestazione
+# FS  si nota una marcata diminuzione dei pixel rossi, corrispondenti ai punti con alta riflettanza nel vicino infrarosso => deforestazione
   
 dev.off()
 
@@ -568,13 +570,13 @@ cldvi <- colorRampPalette(c('light blue','light green','green'))(100)
 plot(dvi2011, col=cldvi)
 
 # multitemporal analysis
-# cambiamento di dvi nel tempo
+# FS  cambiamento di dvi nel tempo
 difdvi <- dvi2011 - dvi1988
 plot(difdvi)
 
-# cambiamento della palette per rendere più evidenti le variazioni
+# FS  cambiamento della palette per rendere più evidenti le variazioni
 cldifdvi <- colorRampPalette(c('red','white','blue'))(100)
-# le zone rosse mostrano un calo del valore di DVI, mentre quelle blu un suo aumento, quelle bianche sono stabili
+# FS  le zone rosse mostrano un calo del valore di DVI, mentre quelle blu un suo aumento, quelle bianche sono stabili
 plot(difdvi, col=cldifdvi)
   
   
@@ -587,23 +589,23 @@ plot(difdvi, col=cldifdvi)
 dev.off()
   
   
-# variare la grana dell'immagine
-p224r63_2011lr <- aggregate(p224r63_2011, fact=10) # i pixel assumono una dimensione 10 volte maggiore (di lato)
+# FS  variare la grana dell'immagine, con il comando aggregate()
+p224r63_2011lr <- aggregate(p224r63_2011, fact = 10) # FS  i pixel assumono una dimensione 10 volte maggiore (di lato)
   
 p224r63_2011
 p224r63_2011lr
 
-# multiframe con immagine di partenza e a risoluzione più bassa
-par(mfrow=c(2,1))
+# FS  multiframe con immagine di partenza e a risoluzione più bassa
+par(mfrow = c(2, 1))
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
 plotRGB(p224r63_2011lr, r=4, g=3, b=2, stretch="Lin")
 
 
-# risluzione ancora più bassa
+# FS  risluzione ancora più bassa
 p224r63_2011lr50 <- aggregate(p224r63_2011, fact=50)
   
 p224r63_2011lr50
-# originale ogni pixel ha lato di 30m -> si passa a lato di 1500m
+# FS  in raster di partenza ogni pixel ha lato di 30m -> si passa a lato di 1500m
   
 par(mfrow=c(3,1))
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
@@ -632,7 +634,7 @@ plot(difdvilr50,col=cldifdvi)
 par(mfrow=c(2,1))
 plot(difdvi, col=cldifdvi)
 plot(difdvilr50, col=cldifdvi)
-# non è più possibile ottenere il livello di dettaglio precedente, l'analisi risulta perciò più grossolana
+# FS  non è più possibile ottenere il livello di dettaglio precedente, l'analisi risulta perciò più grossolana
 
 
 ################################################
@@ -643,7 +645,7 @@ plot(difdvilr50, col=cldifdvi)
 
 setwd("C:/lab")
 
-install.packages("Rstoolbox") # libreria per analisi immagini da telerilevamento
+install.packages("Rstoolbox") # FS  libreria per analisi immagini da telerilevamento
 library(RStoolbox)
 
  
@@ -653,14 +655,14 @@ p224r63_2011 <- brick("p224r63_2011_masked.grd")
 
 
 
-plotRGB(p224r63_2011, r = 4, g = 3, b = 2, stretch = "Lin") # banda infrarossa nel rosso
+plotRGB(p224r63_2011, r = 4, g = 3, b = 2, stretch = "Lin") # FS  banda infrarossa nel rosso
 
 # suddivisione dei pixel in 4 classi
-p224r63_2011c <- unsuperClass(p224r63_2011, nClasses = 4) # 'unsuperClass' sta per "classificazione non supervisionata"
-                                                 # le classi vengono create automaticamente dal software, senza intervento dall'esterno
+p224r63_2011c <- unsuperClass(p224r63_2011, nClasses = 4) # FS  'unsuperClass' sta per "classificazione non supervisionata"
+                                             # FS  le classi vengono create automaticamente dal software, senza intervento dall'esterno
 
-p224r63_2011c # visualizzare lcom'è composto l'oggetto, per visualizzarlo graficamente "p224r63_2011c$map"
-plot(p224r63_2011c$map) # i pixel appaiono colorati di quattro colori differenti, come scelto precedentemente
+p224r63_2011c # FS  visualizzare com'è composto l'oggetto; per visualizzarlo graficamente bisogna selezionare "p224r63_2011c$map"
+plot(p224r63_2011c$map) # FS  i pixel appaiono colorati di quattro colori differenti, come scelto precedentemente
 
 
 
@@ -676,13 +678,9 @@ clclass <- colorRampPalette(c('red', 'green', 'blue', 'black'))(100)
 plot(p224r63_2011c$map, col = clclass)
 
 
-# se il numero di classi è alto, la classe di appartenenza dei singoli pixel non è stabile
-# con un numero di classi più basso, esse hanno una distinzione più netta
-
-
-
-# in funzione del numero di classi aumenta l'incertezza dell'algoritmo automatico di classificazione
-# riportando potenzialmente classi leggermente differenti
+# FS  se il numero di classi è alto, la classe di appartenenza dei singoli pixel non è stabile (se il comando è eseguito
+# FS  molte volte si possono riscontrare variazioni)
+# FS  con un numero di classi più basso, esse hanno una distinzione più netta
 
 
 ################################################
