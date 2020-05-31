@@ -313,16 +313,17 @@ library(spatstat)
 load("Tesi.RData")
 ls()
 
-head(Tesi) # per avere un'idea di com'è fatto l'oggetto
-           # sono presenti vari campi relativi a variabili misurate nei siti di campionamento
+head(Tesi) # FS  per avere un'idea di com'è fatto l'oggetto
+           # FS  sono presenti vari campi relativi a variabili misurate nei siti di campionamento
 attach(Tesi)
  
-summary(Tesi) # statistiche principali dei campi di 'Tesi'
+summary(Tesi) # FS  statistiche principali dei campi di 'Tesi'
 
-# i campi 'Longitude' e 'Latitude' indicano le coordinate dei siti di campionamento
+# FS  i campi 'Longitude' e 'Latitude' indicano le coordinate dei siti di campionamento
 # longitudine varia da 12.42 a 12.46
 # latitudine varia da 43.91 a 43.94
-# point pattern: x,y,c(xmin,xmax),c(ymin,ymax)
+# FS  per effettuare un point pattern sono richieste: x,y,c(xmin,xmax),c(ymin,ymax) (rispettivamente longitudine e latitudine dei punti
+# FS  e limiti di variazione di longitudine e latitudine)
 Tesippp <- ppp(Longitude, Latitude, c(12.41, 12.47), c(43.9, 43.95))
  
 dT <- density(Tesippp)
