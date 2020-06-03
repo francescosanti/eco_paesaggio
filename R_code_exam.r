@@ -1177,3 +1177,38 @@ attach(output)
 library(ggplot2)
 ggplot(output, aes(x=time, y=npatches, color="red")) + geom_bar(stat="identity", fill="white")
 
+
+###################################################
+###################################################
+
+# R code crop
+
+setwd("C:/lab/snow")
+rlist <- list.files(pattern = "snow")
+list_rast <- lapply(rlist, raster)
+
+snow.multitemp <- stack(list_rast)
+clb <- colorRampPalette(c('dark blue','blue','light blue'))(100) # 
+plot(snow.multitemp,col=clb)
+
+extension <- c(6, 20, 35, 50)
+plot(snow.multitemp$snow2010r,col=clb)
+zoom(snow.multitemp$snow2010r, ext = extension) # non taglia l'immagine, viene solo fatto uno zoom
+
+plot(snow.multitemp$snow2010r,col=clb)
+zoom(snow.multitemp$snow2010r, ext = drawExtent()) # in questo caso l'extent viene disegnato graficamente
+                               # il software attende che venga disegnato il rettangolo sul plot precedente
+
+# crop
+# FS  per tagliare una zona dell'immagine originale
+
+extension <- c(6, 20, 35, 50)
+snow2010r.italy <- crop(snow.multitemp$snow2010r, extension) # in questo caso non bisogna scrivere l'argomento a funzione ext
+plot(snow2010r.italy, col = clb)
+
+# Exercise: crop the Italy extent on the whole stack of snow layers
+snow.multitemp.italy <- crop(snow.multitemp, extension)
+plot(snow.multitemp.italy, col=clb)
+
+# boxplot
+boxplot(snow.multitemp.italy, horizontal=T,outline=F)
