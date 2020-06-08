@@ -1212,3 +1212,58 @@ plot(snow.multitemp.italy, col=clb)
 
 # boxplot
 boxplot(snow.multitemp.italy, horizontal=T,outline=F)
+
+
+########################################################################################
+########################################################################################
+
+# Species distribution modelling
+install.packages("sdm") # FS  pacchetto apposito per la modellizzazione della distribuzione delle specie
+library(sdm)
+library(raster)
+library(rgdal)
+
+file <- system.file("external/species.shp", package="sdm") # FS   caricare un file scaricato con il pacchetto sdm
+species <- shapefile(file) # FS  importare il file precedente come shapefile (funzione della libreria rgdal)
+                           # FS  è uno SpatialPointsDataFrame, ovvero un oggetto spaziale formato da tanti punti, che 
+                           # FS  corrispondono ai punti di campionamento della specie, con 2 valori possibili (0=assente, 1=presente)
+
+plot(species)
+
+plot(species[species$Occurrence == 1,],col='blue',pch=16)
+points(species[species$Occurrence == 0,],col='red',pch=16)
+
+path <- system.file("external", package="sdm") # 
+lst <- list.files(path=path,pattern='asc$',full.names = T)
+lst
+
+preds <- stack(lst)
+
+cl <- colorRampPalette(c('blue', 'red','yellow')) (100)
+plot(preds, col=cl)
+
+plot(preds$elevation, col=cl)
+points(species[species$Occurrence == 1,], pch=16)
+
+plot(preds$temperature, col=cl)
+points(species[species$Occurrence == 1,], pch=16)
+
+plot(preds$precipitation, col=cl)
+points(species[species$Occurrence == 1,], pch=16)
+
+plot(preds$vegetation, col=cl)
+points(species[species$Occurrence == 1,], pch=16)
+
+
+d <- sdmData(train=species, predictors=preds)
+d
+
+
+m1 <- sdm(Occurrence ~ elevation + precipitation + temperature + vegetation, data=d, methods='glm')
+
+p1 <- predict(m1, newdata=preds)
+plot(p1, col=cl)
+points(species[species$Occurrence == 1,], pch=16)
+
+
+
