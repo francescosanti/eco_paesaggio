@@ -1475,7 +1475,7 @@ punti.classi <- extract(cover.class$map, punti.fuoco)
 punti.classi <- factor(punti.classi, labels = c("Arbusti","Foresta chiusa\ndecidua","Foresta aperta\ndecidua", "Foresta chiusa\nsempreverde","Vegetazione \nerbacea"))
 table(punti.classi)
 plot(punti.classi,las=1, ylim=c(0,4000), col=c("violet","yellow","red","green","blue"), main="Frequenza aree incendiate\nin base alla vegetazione",
-     xlab="Tipo di vegeetazione", ylab="Frequenza")
+     xlab="Tipo di vegetazione", ylab="Frequenza", cex.lab=1.5)
 
 par(mfrow=c(1,2))
 plot(media, col=cla, las=1)
