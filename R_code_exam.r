@@ -698,8 +698,8 @@ defor1 <- brick("defor1_.png")
 defor2 <- brick("defor2_.png")
 
 defor1
-# names(defor1), alternativa al comando precedente per visualizzare nome dei campi dell'oggetto 'defor1'
-# "defor1_.1" "defor1_.2" "defor1_.3"
+# FS  names(defor1), alternativa al comando precedente per visualizzare nome dei campi dell'oggetto 'defor1'
+# FS  "defor1_.1" "defor1_.2" "defor1_.3"
 
 # defor1_.1 = NIR
 # defor1_.2 = red
@@ -733,13 +733,13 @@ plot(d1c$map, col=cl)
 # mappageologica <- geomap(im_sat,nClasses=....)
 # plot(mappageologica$lito)
 # plot(mappageologica$lineaments)
-# quando un oggetto contiene degli elementi suddivisi in sottocartelle si utilizza il '$' per richiamarli
+# FS  quando un oggetto contiene degli elementi suddivisi in sottocartelle si utilizza il '$' per richiamarli
 
 
-d2c <- unsuperClass(defor2, nClasses = 2) # classificazione dei pixel in due gruppi in modo analogo al precedente
+d2c <- unsuperClass(defor2, nClasses = 2) # FS  classificazione dei pixel in due gruppi in modo analogo al precedente
 plot(d2c$map)
 
-# visualizzazione contemporanea dei due periodi con pixel classificati
+# FS  visualizzazione contemporanea dei due periodi con pixel classificati
 par(mfrow = c(2,1))
 plot(d1c$map, col=cl)
 plot(d2c$map, col=cl)
@@ -752,7 +752,7 @@ freq(d1c$map)
 # foresta = 304253
 
 # numero di pixel totali nella prima immagine
-totd1 <- 37039 + 304253 # questo calcolo poteva anche essere fatto fare automaticamente al software
+totd1 <- 37039 + 304253 # FS  questo calcolo poteva anche essere fatto fare automaticamente al software
 
 totd1
 # 341292
@@ -826,8 +826,8 @@ ggplot(output, aes(x=cover, y=before, color=cover)) +
 ggplot(output, aes(x=cover, y=after, color=cover)) + 
   geom_bar(stat="identity", fill="white")
 
-# la funzione "par" per più grafici in stessa schermata non funziona in ggplot2
-# è necessario installare il pacchetto "gridExtra"
+# FS  la funzione "par" per più grafici in stessa schermata non funziona in ggplot2
+# FS  è necessario installare il pacchetto "gridExtra"
 
 install.packages("gridExtra")
 library(gridExtra)
@@ -871,8 +871,8 @@ ggplot(output, aes(x=cover, y=before, color=cover)) +
 ggplot(output, aes(x=cover, y=after, color=cover)) + 
   geom_bar(stat="identity", fill="white")
 
-# la funzione "par" per più grafici in stessa schermata non funziona in ggplot2
-# è necessario installare il pacchetto "gridExtra"
+# FS  la funzione "par" per più grafici in stessa schermata non funziona in ggplot2
+# FS  è necessario installare il pacchetto "gridExtra"
 
 install.packages("gridExtra")
 library(gridExtra)
@@ -910,15 +910,15 @@ grid.arrange(grafico1, grafico2, nrow = 1)
 
 # r code NO2
 
-# analisi immagini relative a emissioni NO2 prima e dopo lock-down legato a covid19
-# immagini del satellite sentinel dell'ESA
+# FS  analisi immagini relative a emissioni NO2 prima e dopo lock-down legato a covid19
+# FS  immagini del satellite sentinel dell'ESA
 
 setwd("C:/lab")
 
 library(raster)
 # importazione immagine
 EN01 <- raster("EN_0001.png")
-# va bene il comando "raster" perchè l'immagine ha una sola banda; con più bande si utilizza "brick"
+# FS  va bene il comando "raster" perchè l'immagine ha una sola banda; con più bande si utilizza "brick"
 
 plot(EN01)
 
@@ -953,10 +953,10 @@ setwd("~/lab/esa_no2")
 # file con estensione .png inseriti in un oggetto lista
 rlist <- list.files(pattern = ".png", full.names = T)
 
-# importazione vera e propria dei file raster
-list_rast <- lapply(rlist, raster) # con lapply si applica un comando a tutti gli oggetti di una lista
+# FS  importazione vera e propria dei file raster
+list_rast <- lapply(rlist, raster) # FS  con lapply si applica un comando a tutti gli oggetti di una lista
 
-# importazione può essere effettuata anche con ciclo for
+# FS  importazione può essere effettuata anche con ciclo for
 list_rast = list()
 for(i in 1:length(rlist)){
   r <- raster(rlist[[i]])
@@ -970,7 +970,7 @@ plot(EN01, col = cl)
 
 plot(EN13, col = cl)
 
-# confronto fra la prima e l'ultima immagine (in senso temporale) disponibile delle registrazioni relative all'emissione di NO2 in atmosfera 
+# FS  confronto fra la prima e l'ultima immagine (in senso temporale) disponibile delle registrazioni relative all'emissione di NO2 in atmosfera 
 par(mfrow=c(1,2))
 plot(EN01, col=cl)
 plot(EN13, col=cl)
@@ -980,7 +980,7 @@ plot(EN13, col=cl)
 difno2 <- EN13 - EN01
 cldif <- colorRampPalette(c('blue', 'black', 'yellow'))(100)
 plot(difno2, col = cldif)
-# in questo modo risaltano nettamente i punti in cui l'emissione di NO2 è diminuita (blu), aumentata (giallo) o rimasta stabile (nero)
+# FS  in questo modo risaltano nettamente i punti in cui l'emissione di NO2 è diminuita (blu), aumentata (giallo) o rimasta stabile (nero)
 
 
 # multiframe
@@ -1011,26 +1011,26 @@ setwd("C:/lab/esa_no2")
 rlist <- list.files(pattern = ".png")
 rlist
 
-listafinale <- lapply(rlist, raster) # lapply sta per "list apply"
-# lapply si può usare per vettori o liste
+listafinale <- lapply(rlist, raster) # FS  lapply sta per "list apply"
+# FS  lapply si può usare per vettori o liste
 listafinale
 
-EN <- stack(listafinale) # crea un oggetto compatto con tutte le immagini, in questo modo si possono plottare tutte con un solo comando
+EN <- stack(listafinale) # FS  crea un oggetto compatto con tutte le immagini, in questo modo si possono plottare tutte con un solo comando
 
 difEN <- EN$EN_0013 - EN$EN_0001
 cld <- colorRampPalette(c('blue', 'white', 'red'))(100)
-plot(difEN, col = cld) # rappresentazione analoga a quella già plottata precedentemente, ma con colori diversi
+plot(difEN, col = cld) # FS  rappresentazione analoga a quella già plottata precedentemente, ma con colori diversi
 
 cl <- colorRampPalette(c('red', 'orange', 'yellow'))(100)
 plot(EN, col = cl)
 
 
-boxplot(EN, horizontal = T,  # le barre dei boxplot vengono poste orizzontalmente
-        outline = F,         # vengono eliminati gli outliners, i punti che stanno all'esterno dell'intervallo primo-terzo quartile
-        axes = T,            # axes=T è di default, con axes=F non vengono rappresentati gli assi nel plot
+boxplot(EN, horizontal = T,  # FS  le barre dei boxplot vengono poste orizzontalmente
+        outline = F,         # FS  vengono eliminati gli outliners, i punti che stanno all'esterno dell'intervallo primo-terzo quartile
+        axes = T,            # FS  axes=T è di default, con axes=F non vengono rappresentati gli assi nel plot
         las = 1)
   
-# a livello continentale, non cambiano molto i valori medi di NO2
+# FS  a livello continentale, non cambiano molto i valori medi di NO2
 # ciò che cambia sono i valori max, che calano dai primi frame agli ultimi
   
   
@@ -1048,8 +1048,8 @@ setwd("C:/lab")
 library(ncdf4)
 library(raster)
 
-# importazione raster con copertura nevosa del 18/05/20
-# file ottenuto da un satellite del programma Copernicus
+# FS  importazione raster con copertura nevosa del 18/05/20
+# FS  file ottenuto da un satellite del programma Copernicus
 snowmay <- raster("c_gls_SCE500_202005180000_CEURO_MODIS_V1.0.1.nc")
 
 cl <- colorRampPalette(c('darkblue','blue', 'light blue'))(100)
@@ -1060,29 +1060,29 @@ plot(snowmay, col = cl)
 # cambio della working directory
 setwd("C:/lab/snow")
 
-# importazione delle immagini di copertura della neve nei vari anni
-rlist <- list.files(pattern = ".tif", full.names = T) # tutti i file della cartella che hanno estensione ".tif" vengono raggruppati nell'oggetto rlist
+# FS  importazione delle immagini di copertura della neve nei vari anni
+rlist <- list.files(pattern = ".tif", full.names = T) # FS  tutti i file della cartella che hanno estensione ".tif" vengono raggruppati nell'oggetto rlist
 
-# importazione vera e propria degli file precedentemente inseriti nell'oggetto rlist
-list_rast <- lapply(rlist, raster) # ogni file viene importato con il comando "raster"
-snow.multitemp <- stack(list_rast) # con il comando stack i raster vengono raggruppati ed è possibile plottare tutti i raster automaticamente in un'unica finestra 
+# FS  importazione vera e propria degli file precedentemente inseriti nell'oggetto rlist
+list_rast <- lapply(rlist, raster) # FS  ogni file viene importato con il comando "raster"
+snow.multitemp <- stack(list_rast) # FS  con il comando stack i raster vengono raggruppati ed è possibile plottare tutti i raster automaticamente in un'unica finestra 
 plot(snow.multitemp, col=cl)
 
 # confronto fra copertura nevosa nel 2000 e nel 2020
 par(mfrow = c(1, 2))
-plot(snow.multitemp$snow2000r, col = cl, zlim = c(0, 250)) # copertura nel nord europa esagerata per fini didattici
+plot(snow.multitemp$snow2000r, col = cl, zlim = c(0, 250)) # FS  copertura nel nord europa esagerata per fini didattici
 plot(snow.multitemp$snow2020r, col = cl, zlim = c(0, 250))
 
-# accentuazione delle differenze tra i due periodi
+# FS  accentuazione delle differenze tra i due periodi
 difsnow <- snow.multitemp$snow2020r - snow.multitemp$snow2000r
 cldiff <- colorRampPalette(c('blue', 'white', 'red'))(100) 
 par(mfrow = c(1, 1))
-plot(difsnow, col = cldiff) # i pixel blu indicano diminuzione di copertura nevose, quelli rossi guadagno, i bianchi situazione stazionaria
+plot(difsnow, col = cldiff) # FS  i pixel blu indicano diminuzione di copertura nevose, quelli rossi guadagno, i bianchi situazione stazionaria
 
 
-source("prediction.r") # con "source" si possono eseguire comandi da un file esterno
-# con comandi eseguiti si va a creare un modello di variazione dei valori di riflettanza di ogni pixel nel tempo
-# in questo modo si può creare un nuovo raster che faccia da previsione per il futuro, utilizzando il modello calcolato
+source("prediction.r") # FS  con "source" si possono eseguire comandi da un file esterno
+# FS  con comandi eseguiti si va a creare un modello di variazione dei valori di riflettanza di ogni pixel nel tempo
+# FS  in questo modo si può creare un nuovo raster che faccia da previsione per il futuro, utilizzando il modello calcolato
 
 ########
 # codice prediction
@@ -1097,14 +1097,15 @@ extension <- crop(snow.multitemp, ext)
 time <- 1:nlayers(snow.multitemp)
 
 # run the regression
-fun <- function(x) {if (is.na(x[1])){ NA } else {lm(x ~ time)$coefficients[2] }} 
+fun <- function(x) {if (is.na(x[1])){ NA } else {lm(x ~ time)$coefficients[2] }} # FS  viene fatto un modello di regressione lineare fra i pixel corrispondenti dei vari laye
+                                                                                 # FS  e per il layer prediction viene preso il valore "x+1"
 predicted.snow.2025 <- calc(extension, fun) # time consuming: make a pause!
 predicted.snow.2025.norm <- predicted.snow.2025*255/53.90828
 ########
 
 
 
-predicted.snow.2025.norm <- raster("predicted.snow.2025.norm.tif") # copertura di neve nel 2025, stimata dal modello precedente
+predicted.snow.2025.norm <- raster("predicted.snow.2025.norm.tif") # FS  copertura di neve nel 2025, stimata dal modello precedente
 
 plot(predicted.snow.2025.norm, col=cl)
 
@@ -1127,9 +1128,9 @@ plot(d1c, col = cl)
 plot(d2c, col = cl)
 
 
-# lasciare solo pixel relativi ad aree di foresta
-d1c.for <- reclassify(d1c, cbind(1, NA)) # con cbind si associa un valore prescelto ad uno assunto dai pixel
-                                         # in questo caso i pixel di valore 1 assumono il valore NA
+# FS  lasciare solo pixel relativi ad aree di foresta
+d1c.for <- reclassify(d1c, cbind(1, NA)) # FS  con cbind si associa un valore prescelto ad uno assunto dai pixel
+                                         # FS  in questo caso i pixel di valore 1 assumono il valore NA
 
 d2c.for <- reclassify(d2c, cbind(1, NA))
 
@@ -1141,14 +1142,14 @@ plot(d1c, col = cl)
 plot(d1c.for, col = cl)
 
 
-install.packages("igraph") # non è un pacchetto vero e proprio, ma una dependency di raster
+install.packages("igraph") # FS  non è un pacchetto vero e proprio, ma una dependency di raster
 library(igraph)
 
 # contare il numero di patch 
 d1c.for.patches <- clump(d1c.for)
 d2c.for.patches <- clump(d2c.for)
 
-# per salvare un raster all'esterno di r si utilizza la funzione "writeRaster"
+# FS  per salvare un raster all'esterno di r si utilizza la funzione "writeRaster"
 writeRaster(d1c.for.patches,"d1c.for.patches.tif")
 writeRaster(d2c.for.patches,"d2c.for.patches.tif")
 
@@ -1193,17 +1194,17 @@ plot(snow.multitemp,col=clb)
 
 extension <- c(6, 20, 35, 50)
 plot(snow.multitemp$snow2010r,col=clb)
-zoom(snow.multitemp$snow2010r, ext = extension) # non taglia l'immagine, viene solo fatto uno zoom
+zoom(snow.multitemp$snow2010r, ext = extension) # FS  non taglia l'immagine, viene solo fatto uno zoom
 
 plot(snow.multitemp$snow2010r,col=clb)
-zoom(snow.multitemp$snow2010r, ext = drawExtent()) # in questo caso l'extent viene disegnato graficamente
-                               # il software attende che venga disegnato il rettangolo sul plot precedente
+zoom(snow.multitemp$snow2010r, ext = drawExtent()) # FS  in questo caso l'extent viene disegnato graficamente
+                               # FS  il software attende che venga disegnato il rettangolo sul plot precedente
 
 # crop
 # FS  per tagliare una zona dell'immagine originale
 
 extension <- c(6, 20, 35, 50)
-snow2010r.italy <- crop(snow.multitemp$snow2010r, extension) # in questo caso non bisogna scrivere l'argomento a funzione ext
+snow2010r.italy <- crop(snow.multitemp$snow2010r, extension) # FS  in questo caso non bisogna scrivere l'argomento a funzione ext
 plot(snow2010r.italy, col = clb)
 
 # Exercise: crop the Italy extent on the whole stack of snow layers
@@ -1255,11 +1256,13 @@ plot(preds$vegetation, col=cl)
 points(species[species$Occurrence == 1,], pch=16)
 
 
-d <- sdmData(train=species, predictors=preds)
+d <- sdmData(train=species, predictors=preds) # FS  si indicano a R i dati relativi alla/e specie e quelli relativi alle variabili da considerare
 d
 
 
-m1 <- sdm(Occurrence ~ elevation + precipitation + temperature + vegetation, data=d, methods='glm')
+m1 <- sdm(Occurrence ~ elevation + precipitation + temperature + vegetation, data=d, methods='glm') # FS  viene calcolato il modello
+                                                                               # FS  l'occorrenza della specie in funzione delle 4 variabili considerate
+                                                                               # FS  in questo caso come glm
 
 p1 <- predict(m1, newdata=preds)
 plot(p1, col=cl)
@@ -1383,14 +1386,14 @@ summary(lm(freq.incendi$Diversity ~ freq.incendi$`Mean pixel`))
 
 ## Mappe di densità degli incendi
 
-## da commentare
+
 setwd("C:/lab")
+# importazione confine
 aaa<-shapefile("Australia_boundary.shp")
 bbb<-crop(aaa,ex)
 proj4string(bbb) <- CRS(as.character(NA))
-
+# settare confine a classe "owin" per poterla rendere finestra nel calcolo del point pattern
 bbb.owin <- as.owin(bbb)
-
 
 dens_inc <- list()
 for(a in 1:length(punti_incendi)){
@@ -1398,9 +1401,11 @@ for(a in 1:length(punti_incendi)){
   dens_inc[[a]] <- density(c)
 }
 
+
 setwd("C:/lab")
 e <- shapefile("ne_10m_coastline.shp")
 coast <- crop(e, ex)
+# file meno pesante, più veloce da plottare come confine
 
 par(mfrow=c(2,3))
 par(cex.main=2)
@@ -1416,6 +1421,7 @@ for(a in 1:length(dens_inc)){
 
 
 # mappa di probabilità incendi
+# faccio la media fra le varie mappe di densità
 ccc <- list()
 ccc <- lapply(dens_inc,raster)
 ccc <- reclassify(ccc, cbind(NA, 0))
@@ -1433,7 +1439,7 @@ for(a in 1:6){
   media <- media + ccc[[a]]
 }
 
-
+# mappa
 cla <- colorRampPalette(c("green","yellow","red"))(200)
 plot(media, col=cla, legend=F, las=1, main="Rischio incendi", cex.axis=1.5)
 plot(coast, add=T)
@@ -1441,11 +1447,7 @@ legend(x="bottomleft", legend = c("Basso", "Medio", "Alto"), fill = c("Green","Y
 
 
 
-# coperture del suolo interessate da incendi
-
-land.cover <- raster("c_gls_FCOVER_201901130000_GLOBE_PROBAV_V1.5.1.nc") 
-land.cover <- crop(land.cover,ex)
-
+## coperture del suolo interessate da incendi
 
 # estrazione punti aree incendiate
 inc.19 <- reclassify(inc.aus[[5]],cbind(128,NA)) 
@@ -1455,8 +1457,9 @@ punti.inc19 <- rasterToPoints(inc.19)
 punti.inc19 <- punti.inc19[,1:2]
 
 
-
-
+# importazione file FCOVER
+land.cover <- raster("c_gls_FCOVER_201901130000_GLOBE_PROBAV_V1.5.1.nc") 
+land.cover <- crop(land.cover,ex)
 
 cover.class <- unsuperClass(land.cover, nClasses = 5)
 cll <- colorRampPalette(c("violet","yellow","red","green","blue"))(100)
@@ -1471,17 +1474,29 @@ legend(x="bottomleft", legend = c("Vegetazione \n  arbustiva", "Foresta chiusa \
 # 4: foresta latifoglie sempreverdi
 # 5: vegetazione erbacea
 
+# estrazione tipologia di vegetazione di aree incendiate
 punti.classi <- extract(cover.class$map, punti.fuoco)
 punti.classi <- factor(punti.classi, labels = c("Arbusti","Foresta chiusa\ndecidua","Foresta aperta\ndecidua", "Foresta chiusa\nsempreverde","Vegetazione \nerbacea"))
 table(punti.classi)
 plot(punti.classi,las=1, ylim=c(0,4000), col=c("violet","yellow","red","green","blue"), main="Frequenza aree incendiate\nin base alla vegetazione",
      xlab="Tipo di vegetazione", ylab="Frequenza", cex.lab=1.5)
 
-par(mfrow=c(1,2))
-plot(media, col=cla, las=1)
-plot(coast, add=T)
-plot(cover.class$map, col=cll, las=1)
-plot(coast, add=T)
+
+# confonto frequenze vegetazione e australia e vegetazione incendiata
+ww <- data.frame(freq(cover.class$map)[1:5,],table(punti.classi))
+ww$class.perc <- prop.table(ww$count)
+ww$inc.perc <- prop.table(ww$Freq)
+ww
+
+
+plot(ww$class.perc, col="red", pch=16, xlab="Classe di vegetazione", ylab="Frequenza", las=1, main="Frequenza classi di vegetazione")
+points(ww$inc.perc, col="blue", pch=17)
+grid()
+legend(legend = c("Vegetazione\nAustralia","Vegetazione\nincendiata"),x=2.5,y=0.5,col=c("red","blue"),pch=c(16,17))
+
+shapiro.test(ww$class.perc)
+shapiro.test(ww$inc.perc)
+chisq.test(ww$class.perc,ww$inc.perc)
 
 
 ########################################################################################################
