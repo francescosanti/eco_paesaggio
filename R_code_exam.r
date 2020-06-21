@@ -1267,3 +1267,226 @@ points(species[species$Occurrence == 1,], pch=16)
 
 
 
+############################################################################################################
+############################################################################################################
+
+# SCRIPT ESAME
+
+library(raster)
+library(ggplot2)
+library(vegan)
+library(spatstat)
+library(rgdal)
+library(maptools)
+library(RStoolbox)
+
+### INCENDI
+setwd("C:/lab/esame/incendi")
+
+# importazione di prova
+inc.01.20<-brick("c_gls_BA300_QL_202001100000_GLOBE_PROBAV_V1.1.1.tif")
+ex <- extent(c(110,155,-45,-9.5))
+inc.aus.01.20 <- crop(inc.01.20, ex)
+
+plot(inc.aus.01.20)
+freq(inc.aus.01.20)
+# visione simultanea dei plot delle quattro bande e delle frequenze dei valori dei pixel di ognuno
+# mi basta importare la prima banda, in cui
+# 128 = pixel di terra
+# 234 = pixel di acqua
+# 255 = pixel di terra bruciata
+
+
+# importazione raster
+
+rlist <- list.files(pattern = ".tif", full.names = T)
+list_rast <- lapply(rlist, raster) # importo solo la prima banda
+
+inc.aus <- stack(list_rast)
+inc.aus <- crop(inc.aus, ex)
+inc.aus <- reclassify(inc.aus, cbind(234,NA), include.lowest=T) # eliminazione pixel acqua
+cl <- colorRampPalette(c("green","red"))(2)
+par(cex.main=2.5)
+par(cex.axis=2)
+plot(inc.aus, main = paste("01/20", 15:20, sep=""), col=cl, las=1, legend=F)
+legend(x="topright", legend = c("Non bruciato", "Bruciato"), fill = cl, cex=2)
+
+# par(mfrow=c(2,3))
+# for(a in 1:length(inc.aus)){
+#   plot(inc.aus[[a]], main = paste("01/20", a+14, sep=""), col=cl)
+#   plot(coast, add=T)
+# }
+
+
+Burnt <- vector(mode = "numeric", length = 6)
+Not_burnt <- vector(mode = "numeric", length = 6)
+Year <- as.character(2015:2020)
+
+freq.incendi <- data.frame(Year,Burnt)
+freq.incendi$'Not burnt' <- Not_burnt
+
+for (a in 1:length(list_rast)){
+  b <- freq(inc.aus[[a]])
+  freq.incendi$Burnt[a] <- b[2, 2]
+  freq.incendi$`Not burnt`[a] <- b[1, 2]
+}
+
+freq.incendi
+
+ggplot(freq.incendi, aes(x = Year, y = Burnt, color = Year)) + geom_bar(stat="identity", fill="white")
+
+
+
+
+# lasciare solo pixel relativi ad aree bruciate
+
+list_rast2 <- reclassify(inc.aus, cbind(128, NA), right=TRUE)
+
+
+# estrarre punti relativi ad aree bruciate
+punti_incendi <- list()
+for(a in 1:nlayers(list_rast2)){
+  b <- rasterToPoints(list_rast2[[a]])
+  punti_incendi[[a]] <- b[,1:2]
+}
+
+
+
+# quante aree bruciate e di che dimensione?
+npatc <- vector(length = 6,mode = "numeric")
+div <- vector(length = 6,mode = "numeric")
+
+for(a in 1:nlayers(list_rast2)){
+  v <- clump(list_rast2[[a]])
+  ee <- freq(v)
+  ee <- ee[1:(dim(ee)[1]-1),2]
+  div[a] <- diversity(ee,"shannon")/log(length(ee))
+  npatc[a] <- length(ee)
+}
+freq.incendi$'Number of patches' <- npatc
+freq.incendi$'Mean pixel'<- freq.incendi$Burnt/freq.incendi$`Number of patches`
+freq.incendi$'Diversity' <- div
+
+freq.incendi
+
+cor.test(freq.incendi$Diversity,freq.incendi$`Mean pixel`)
+plot(freq.incendi$`Mean pixel`, freq.incendi$Diversity, xlab = "Mean pixels per fire patch",
+     ylab = "Pielou index", las = 1, col = "red", cex.lab = 1.3, cex = 1.1, pch = 19, main = "Diversity of fire patches ")
+text(freq.incendi$`Mean pixel`, freq.incendi$Diversity, labels = freq.incendi$Year, cex = 1.1,
+     offset = 0.8, pos = c(rep(4,4),rep(2,2)))
+abline(lm(freq.incendi$Diversity ~ freq.incendi$`Mean pixel`))
+
+summary(lm(freq.incendi$Diversity ~ freq.incendi$`Mean pixel`))
+
+
+
+
+## Mappe di densità degli incendi
+
+## da commentare
+setwd("C:/lab")
+aaa<-shapefile("Australia_boundary.shp")
+bbb<-crop(aaa,ex)
+proj4string(bbb) <- CRS(as.character(NA))
+
+bbb.owin <- as.owin(bbb)
+
+
+dens_inc <- list()
+for(a in 1:length(punti_incendi)){
+  c <- ppp(punti_incendi[[a]][, 1], punti_incendi[[a]][, 2], window = bbb.owin)
+  dens_inc[[a]] <- density(c)
+}
+
+setwd("C:/lab")
+e <- shapefile("ne_10m_coastline.shp")
+coast <- crop(e, ex)
+
+par(mfrow=c(2,3))
+par(cex.main=2)
+for(a in 1:length(dens_inc)){
+  plot(dens_inc[[a]], main = paste("Fire patches density 01/20",a+14,sep=""), cex.main=2, las=1)
+  plot(coast, add=T)
+}
+
+for(a in 1:length(dens_inc)){
+  plot(dens_inc[[a]], main = paste("Fire density 01/20",a+14,sep=""), las=1, zlim=c(0,22))
+  plot(coast, add=T)
+}
+
+
+# mappa di probabilità incendi
+ccc <- list()
+ccc <- lapply(dens_inc,raster)
+ccc <- reclassify(ccc, cbind(NA, 0))
+
+for(a in 1:6){
+  ccc[[a]] <- reclassify(raster(dens_inc[[1]]), cbind(NA, 0))
+}
+for(a in 1:6){
+  ccc[[a]] <- ccc[[a]]/6
+}
+
+media <- raster(dens_inc[[a]])
+media <- reclassify(media, cbind(0,255,0),include.lowest=T,right=T)
+for(a in 1:6){
+  media <- media + ccc[[a]]
+}
+
+
+cla <- colorRampPalette(c("green","yellow","red"))(200)
+plot(media, col=cla, legend=F, las=1, main="Rischio incendi", cex.axis=1.5)
+plot(coast, add=T)
+legend(x="bottomleft", legend = c("Basso", "Medio", "Alto"), fill = c("Green","Yellow","Red"), cex=2)
+
+
+
+# coperture del suolo interessate da incendi
+
+land.cover <- raster("c_gls_FCOVER_201901130000_GLOBE_PROBAV_V1.5.1.nc") 
+land.cover <- crop(land.cover,ex)
+
+
+# estrazione punti aree incendiate
+inc.19 <- reclassify(inc.aus[[5]],cbind(128,NA)) 
+crrs <- CRS("+proj=longlat +a=6378137 +rf=298.257223563 +pm=0")
+proj4string(inc.19) <- crrs
+punti.inc19 <- rasterToPoints(inc.19)
+punti.inc19 <- punti.inc19[,1:2]
+
+
+
+
+
+cover.class <- unsuperClass(land.cover, nClasses = 5)
+cll <- colorRampPalette(c("violet","yellow","red","green","blue"))(100)
+plot(cover.class$map, col=cll, legend=F, las=1, main="Copertura suolo", cex.axis=1.5)
+plot(coast, add=T)
+legend(x="bottomleft", legend = c("Vegetazione \n  arbustiva", "Foresta chiusa \nlatifoglie decidue", 
+                                  "Foresta aperta \nlatifoglie decidue","Foresta chiusa \nlatifoglie sempreverdi", "Vegetazione \n  erbacea"),
+                 fill = c("violet","yellow","red","green","blue"), cex=1.2)
+# 1: vegetazione arbustiva
+# 2: foresta latifoglie decidue (closed)
+# 3: foresta latifoglie decidue (open)
+# 4: foresta latifoglie sempreverdi
+# 5: vegetazione erbacea
+
+punti.classi <- extract(cover.class$map, punti.fuoco)
+punti.classi <- factor(punti.classi, labels = c("Arbusti","Foresta chiusa\ndecidua","Foresta aperta\ndecidua", "Foresta chiusa\nsempreverde","Vegetazione \nerbacea"))
+table(punti.classi)
+plot(punti.classi,las=1, ylim=c(0,4000), col=c("violet","yellow","red","green","blue"), main="Frequenza aree incendiate\nin base alla vegetazione",
+     xlab="Tipo di vegeetazione", ylab="Frequenza")
+
+par(mfrow=c(1,2))
+plot(media, col=cla, las=1)
+plot(coast, add=T)
+plot(cover.class$map, col=cll, las=1)
+plot(coast, add=T)
+
+
+########################################################################################################
+########################################################################################################
+
+#### FINE ####
+
+
