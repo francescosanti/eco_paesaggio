@@ -1,4 +1,4 @@
-# R_code_exam.r
+# R_code_exam.r 
 
 # Copernicus data: https://land.copernicus.vgt.vito.be/PDF/portal/Application.html
 
